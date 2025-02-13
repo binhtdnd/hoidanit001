@@ -9,6 +9,8 @@ const initWebRoutes = (app) => {
 
   router.post("/user/create-user", homeController.handleCreateNewUser);
   router.post("/delete-user/:id", homeController.handleDeleteUser);
+  router.post("/update-user/:id", homeController.getUpdateUserPage);
+  router.post("/updated-user/:id", homeController.updateUser);
 
   router.get("/about", (req, res) => {
     return res.send("I'm bb");
