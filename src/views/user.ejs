@@ -14,17 +14,21 @@
     <div class="user-infor-container">
         <form method="POST" action="/users/create-user">
             <div class="container col-4 mt-3">
-            
+                <div>
+                    <h3>Create a new user:</h3>
+                </div>
                 <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                name="email" required
+                name="email" required value="@gmail.com"
                 >         
                 </div>
 
                 <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="password" name="password" 
+                required
+                >
                 </div>
 
                 <div class="mb-3">
