@@ -8,22 +8,33 @@ const hashPassword = (password) => {
   return bcrypt.hashSync(password, salt);
 };
 
-const createNewUser = (email, password, username) => {
-  const connection = mysql2.createConnection({
+const createNewUser = async (email, password, username) => {
+  const connection = await mysql2.createConnection({
     host: "localhost",
     user: "root",
     database: "jwthoidanit001",
     Promise: bluebird,
   });
   let hash = hashPassword(password);
-  connection.query(
-    "INSERT INTO users(email,password,username) VALUES (?,?,?)",
-    [email, hash, username],
-    function (err, results, fields) {
-      //   console.log(results);
-      //console.log(fields);
-    }
-  );
+
+  //run ok
+  //   connection.query(
+  //     "INSERT INTO users(email,password,username) VALUES (?,?,?)",
+  //     [email, hash, username],
+  //     function (err, results, fields) {
+  //       //   console.log(results);
+  //       //console.log(fields);
+  //     }
+  //   );
+
+  try {
+    const [rows, fields] = await connection.execute(
+      "INSERT INTO users(email,password,username) VALUES (?,?,?)",
+      [email, hash, username]
+    );
+  } catch (e) {
+    console.log("check err: ", e);
+  }
 };
 
 const getUserList = async () => {
@@ -53,7 +64,24 @@ const getUserList = async () => {
   //   });
 };
 
+const deleteUser = async (id) =>{
+
+  const connection = await mysql2.createConnection({
+    host: "localhost",
+    user: "root",
+    database: "jwthoidanit001",
+    Promise: bluebird,
+  });
+  try {
+    const [rows, fields] = await connection.execute("delete from users where id=?",[id]);
+    return rows;
+  } catch (e) {
+    console.log("check err: ", e);
+  }
+}
+
 module.exports = {
   createNewUser,
   getUserList,
+  deleteUser
 };
